@@ -98,3 +98,19 @@ const galleryItemsMarkup = galleryItems
 .join('');
 
 galleryRef.insertAdjacentHTML('beforeend', galleryItemsMarkup);
+
+// Реализация делегирования на галерее ul.js-gallery и получение url большого изображения.
+
+galleryRef.addEventListener('click', onGalleryClick);
+
+function onGalleryClick(s) {
+  s.preventDefault();
+
+  const originalImgSrc = s.target.dataset.source;
+  
+  currentImageIndex = Number(s.target.dataset.index);
+
+  // Открытие модального окна по клику на элементе галереи.
+  
+  lightboxRef.classList.add('is-open');
+}
