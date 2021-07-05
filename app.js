@@ -124,3 +124,39 @@ window.addEventListener('keydown', onEscBtnKeydown);
 
 window.addEventListener('keydown', onArrowBtnKeydown);
 }
+
+// Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"].
+
+function onlightboxRefClick(s) {
+  const isCloseBtnClicked = s.target.dataset.action === 'close-lightbox';
+
+if (isCloseBtnClicked) {
+  closeLightbox();
+}
+
+  // Закрытие модального окна по клику на div.lightbox__overlay.
+
+  const lightbox__overlayRef = document.querySelector('.lightbox__overlay');
+
+  const isLightbox__overlayClicked = e.target === lightbox__overlayRef;
+
+  if (isLightbox__overlayClicked) {
+    closeLightbox();
+  }
+}
+
+function closeLightbox() {
+  lightboxRef.classList.remove('is-open');
+  
+  closeLightboxBtn.removeEventListener('click', onlightboxRefClick);
+  
+  window.removeEventListener('keydown', onEscBtnKeydown);
+  
+  window.removeEventListener('keydown', onArrowBtnKeydown);
+
+  // Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для того, чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
+  
+  lightbox__imageRef.src = '';
+
+  currentImageIndex = 0;
+}
