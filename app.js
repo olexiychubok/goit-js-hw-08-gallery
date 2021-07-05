@@ -113,4 +113,14 @@ function onGalleryClick(s) {
   // Открытие модального окна по клику на элементе галереи.
   
   lightboxRef.classList.add('is-open');
+
+  // Подмена значения атрибута src элемента img.lightbox__image.
+
+lightbox__imageRef.src = originalImgSrc;
+
+lightboxRef.addEventListener('click', onlightboxRefClick)
+
+window.addEventListener('keydown', onEscBtnKeydown);
+
+window.addEventListener('keydown', onArrowBtnKeydown);
 }
