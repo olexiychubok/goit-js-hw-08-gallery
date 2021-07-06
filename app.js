@@ -124,7 +124,7 @@ lightboxRef.addEventListener('click', onlightboxRefClick);
 
 window.addEventListener('keydown', onEscBtnKeydown);
 
-// window.addEventListener('keydown', onArrowBtnKeydown);
+window.addEventListener('keydown', onArrowBtnKeydown);
 }
 
 // Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"].
@@ -154,7 +154,7 @@ function closeLightbox() {
   
   window.removeEventListener('keydown', onEscBtnKeydown);
   
-  // window.removeEventListener('keydown', onArrowBtnKeydown);
+  window.removeEventListener('keydown', onArrowBtnKeydown);
 
   // Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для того, чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
   
@@ -172,4 +172,28 @@ function onEscBtnKeydown(s) {
   if (isEscBtnClicked) {
     closeLightbox();
   }
+}
+
+// Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
+
+
+function onArrowBtnKeydown(s) {
+  const isScrollLeft = s.code === 'ArrowLeft';
+  const isScrollRight = s.code === 'ArrowRight';
+
+  if (isScrollLeft) {
+    currentImageIndex -= 1;
+    if (currentImageIndex < 0) {
+      currentImageIndex = galleryItems.length - 1;
+    }
+  }
+
+  if (isScrollRight) {
+    currentImageIndex += 1;
+    if (currentImageIndex > galleryItems.length - 1) {
+      currentImageIndex = 0;
+    }
+  }
+  const newOriginalImageSrc = galleryItems[currentImageIndex].original;
+  lightbox__imageRef.src = newOriginalImageSrc;
 }
