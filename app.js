@@ -109,7 +109,9 @@ function onGalleryClick(s) {
   const originalImgSrc = s.target.dataset.source;
   
   currentImageIndex = Number(s.target.dataset.index);
-
+  if (!s.target.classList.contains('gallery__image')) {
+    return;
+}
   // Открытие модального окна по клику на элементе галереи.
   
   lightboxRef.classList.add('is-open');
@@ -118,11 +120,11 @@ function onGalleryClick(s) {
 
 lightbox__imageRef.src = originalImgSrc;
 
-lightboxRef.addEventListener('click', onlightboxRefClick)
+lightboxRef.addEventListener('click', onlightboxRefClick);
 
 window.addEventListener('keydown', onEscBtnKeydown);
 
-window.addEventListener('keydown', onArrowBtnKeydown);
+// window.addEventListener('keydown', onArrowBtnKeydown);
 }
 
 // Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"].
@@ -138,7 +140,7 @@ if (isCloseBtnClicked) {
 
   const lightbox__overlayRef = document.querySelector('.lightbox__overlay');
 
-  const isLightbox__overlayClicked = e.target === lightbox__overlayRef;
+  const isLightbox__overlayClicked = s.target === lightbox__overlayRef;
 
   if (isLightbox__overlayClicked) {
     closeLightbox();
@@ -152,11 +154,22 @@ function closeLightbox() {
   
   window.removeEventListener('keydown', onEscBtnKeydown);
   
-  window.removeEventListener('keydown', onArrowBtnKeydown);
+  // window.removeEventListener('keydown', onArrowBtnKeydown);
 
   // Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для того, чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
   
   lightbox__imageRef.src = '';
 
   currentImageIndex = 0;
+}
+
+  // Закрытие модального окна по нажатию клавиши ESC.
+
+function onEscBtnKeydown(s) {
+
+  const isEscBtnClicked = s.code === 'Escape';
+
+  if (isEscBtnClicked) {
+    closeLightbox();
+  }
 }
